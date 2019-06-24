@@ -5,26 +5,29 @@
     "upnp": false,
     "upnpGatewayTimeout": 7000,
     "upnpDiscoverTimeout": 3000,
-    "port": 9088,
+    "port": 9089,
     "knownPeers": [
-      "127.0.0.1:9084"
+      "127.0.0.1:9084",
+      "127.0.0.3:9094"
     ],
     "addedMaxDelay": 1000,
     "maxConnections": 10
   },
-  "walletSeed": "genesiso1",
-  "walletDir": "/tmp/scorex/data2/wallet",
+  "walletSeed": "genesiso2",
+  "walletDir": "/tmp/bifrost/data2/wallet",
   "keyFileDir": "keyfiles/node2",
-  "dataDir": "/tmp/scorex/data2/blockchain",
-  "logDir": "/tmp/scorex/data2/log",
-  "rpcPort": 9089,
+  "dataDir": "/tmp/bifrost/data2/blockchain",
+   "sbrDir": "/tmp/bifrost/data2/sbr",
+  "logDir": "/tmp/bifrost/data2/log",
+  "rpcPort": 9090,
   "rpcAllowed": [],
   "maxRollback": 100,
-  "offlineGeneration": false,
+  "offlineGeneration": true,
   "blockGenerationDelay": 5000,
    "targetBlockTime": 30000,
   "cors": false,
   "agent": "test-net1",
   "testnet": true,
-  "version": [0, 0, 1]
+  "version": [3, 0, 0],
+   "forkHeight": 0
 }
