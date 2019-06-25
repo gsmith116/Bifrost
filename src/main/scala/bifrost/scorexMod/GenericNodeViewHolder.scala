@@ -112,6 +112,7 @@ trait GenericNodeViewHolder[T, P <: Proposition, TX <: GenericBoxTransaction[P, 
                 case Some(x) =>
                 log.debug(s"${Console.RED} Attempting to rollback transactions from branchPoint " + progressInfo.branchPoint.get + ": ")
                   rolledBackTxs.foreach(x => log.debug(s"${Console.RED} " + x))
+                case _ =>
               }
 
 
