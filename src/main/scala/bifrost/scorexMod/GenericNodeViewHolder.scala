@@ -108,8 +108,11 @@ trait GenericNodeViewHolder[T, P <: Proposition, TX <: GenericBoxTransaction[P, 
             case Success(newMinState) =>
               val rolledBackTxs = progressInfo.toRemove.flatMap(_.transactions.filter(!_.isInstanceOf[CoinbaseTransaction])).flatten
 
-              log.debug(s"${Console.RED} Attempting to rollback transactions from branchPoint " + progressInfo.branchPoint.get +": ")
-              rolledBackTxs.foreach(x => log.debug(s"${Console.RED} " + x))
+              progressInfo.branchPoint match {
+                case Some(x) =>
+                log.debug(s"${Console.RED} Attempting to rollback transactions from branchPoint " + progressInfo.branchPoint.get + ": ")
+                  rolledBackTxs.foreach(x => log.debug(s"${Console.RED} " + x))
+              }
 
 
               val appliedMods = progressInfo.toApply
