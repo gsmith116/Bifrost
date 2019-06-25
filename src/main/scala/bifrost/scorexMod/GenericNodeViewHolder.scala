@@ -106,18 +106,7 @@ trait GenericNodeViewHolder[T, P <: Proposition, TX <: GenericBoxTransaction[P, 
 
           newStateTry match {
             case Success(newMinState) =>
-              val rolledBackTxs = progressInfo.toRemove.flatMap(_.transactions.filter(tx => !tx.isInstanceOf[CoinbaseTransaction])).flatten
-
-//              progressInfo.branchPoint match {
-//                case Some(x) =>
-//                  println()
-//                log.debug(s"${Console.RED} Attempting to rollback transactions from branchPoint " + Base58.encode(progressInfo.branchPoint.get) + ": ")
-//                  rolledBackTxs.foreach(x => {log.debug(s"${Console.RED} " + x)
-//                    log.debug(s"${Console.RED} Is Coinbase transaction check result = " + x.isInstanceOf[CoinbaseTransaction])})
-//                  println()
-//                case _ =>
-//              }
-
+              val rolledBackTxs = progressInfo.toRemove.flatMap(_.transactions).flatten
 
               val appliedMods = progressInfo.toApply
 
@@ -129,7 +118,7 @@ trait GenericNodeViewHolder[T, P <: Proposition, TX <: GenericBoxTransaction[P, 
               }
               val validUnconfirmed = newMemPool.take(100)
               log.debug(s"${Console.GREEN}Re-Broadcast unconfirmed TXs: ${validUnconfirmed.map(tx => Base58.encode(tx.id)).toList}${Console.RESET}")
-              validUnconfirmed.foreach(tx => { if(tx.isInstanceOf[CoinbaseTransaction]) {log.debug(s"${Console.RED}" + tx)}
+              validUnconfirmed.foreach(tx => { if(tx.isInstanceOf[CoinbaseTransaction]) {log.debug(s"${Console.RED}Attempting to rebroadcast Coinbase transaction" + tx)}
                 notifySubscribers(EventType.SuccessfulTransaction, SuccessfulTransaction[P, TX](tx, None))})
               log.debug(s"${Console.GREEN}newMemPool Size: ${newMemPool.size}${Console.RESET}")
 
