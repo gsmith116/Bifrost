@@ -112,7 +112,8 @@ trait GenericNodeViewHolder[T, P <: Proposition, TX <: GenericBoxTransaction[P, 
                 case Some(x) =>
                   println()
                 log.debug(s"${Console.RED} Attempting to rollback transactions from branchPoint " + Base58.encode(progressInfo.branchPoint.get) + ": ")
-                  rolledBackTxs.foreach(x => log.debug(s"${Console.RED} " + x))
+                  rolledBackTxs.foreach(x => {log.debug(s"${Console.RED} " + x)
+                    log.debug(s"${Console.RED} Is Coinbase transaction check result = " + x.isInstanceOf[CoinbaseTransaction])})
                   println()
                 case _ =>
               }
@@ -123,7 +124,7 @@ trait GenericNodeViewHolder[T, P <: Proposition, TX <: GenericBoxTransaction[P, 
               val appliedTxs = appliedMods.flatMap(_.transactions).flatten
               var newMemPool = memoryPool()
               log.debug(s"${Console.GREEN}before newMemPool Size: ${newMemPool.size}${Console.RESET}")
-              newMemPool = memoryPool().putWithoutCheck(rolledBackTxs).filter { tx =>
+              newMemPool = memoryPool().putWithoutCheck(rolledBackTxs).filter { tx => !tx.isInstanceOf[CoinbaseTransaction] &&
                 !appliedTxs.exists(t => t.id sameElements tx.id) && newMinState.validate(tx).isSuccess
               }
               val validUnconfirmed = newMemPool.take(100)
