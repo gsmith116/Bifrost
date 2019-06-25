@@ -7,8 +7,7 @@
     "upnpDiscoverTimeout": 3000,
     "port": 9082,
     "knownPeers": [
-      "127.0.0.1:9081",
-      "127.0.0.3:9083"
+      "127.0.0.1:9081"
     ],
     "addedMaxDelay": 1000,
     "maxConnections": 10
@@ -26,7 +25,7 @@
   "blockGenerationDelay": 5000,
    "targetBlockTime": 30000,
   "cors": false,
-  "agent": "test-net1",
+  "agent": "test-net2",
   "testnet": true,
   "version": [3, 0, 0],
    "forkHeight": 0

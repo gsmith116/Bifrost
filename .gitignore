@@ -8,6 +8,7 @@ scorex.yaml
 # scala build folders
 target
 classes
+logs
 
 # dotfiles
 .dockerignore

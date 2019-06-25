@@ -1,26 +1,33 @@
 {
-  "name": "node5",
   "p2p": {
+    "name": "node5",
     "bindAddress": "127.0.0.5",
     "upnp": false,
     "upnpGatewayTimeout": 7000,
     "upnpDiscoverTimeout": 3000,
-    "port": 9096,
+    "port": 9085,
     "knownPeers": [
-      "127.0.0.1:9084"
+      "127.0.0.1:9081",
+      "127.0.0.2:9082"
     ],
     "addedMaxDelay": 500,
     "maxConnections": 10
   },
-  "walletDir": "/tmp/scorex/data5/wallet",
-  "walletSeed": "genesiso4",
+  "walletSeed": "genesis-5",
+  "walletDir": "/tmp/bifrost/data5/wallet",
   "keyFileDir": "keyfiles/node5",
-  "dataDir": "/tmp/scorex/data5/blockchain",
-  "logDir": "/tmp/scorex/data5/log",
-  "rpcPort": 9097,
+  "dataDir": "/tmp/bifrost/data5/blockchain",
+  "sbrDir": "/tmp/bifrost/data5/sbr",
+  "logDir": "/tmp/bifrost/data5/log",
+  "rpcPort": 9095,
   "rpcAllowed": [],
   "maxRollback": 100,
-  "blockGenerationDelay": 0,
+  "offlineGeneration": true,
+  "blockGenerationDelay": 5000,
+  "targetBlockTime": 30000,
+  "cors": false,
+  "agent": "test-net5",
   "testnet": true,
-  "cors": false
+  "version": [3, 0, 0],
+  "forkHeight": 0
 }

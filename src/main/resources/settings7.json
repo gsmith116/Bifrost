@@ -1,26 +1,33 @@
 {
-  "name": "node7",
   "p2p": {
+    "name": "node7",
     "bindAddress": "127.0.0.7",
     "upnp": false,
     "upnpGatewayTimeout": 7000,
     "upnpDiscoverTimeout": 3000,
-    "port": 9100,
+    "port": 9087,
     "knownPeers": [
-      "127.0.0.1:9084"
+      "127.0.0.1:9081",
+      "127.0.0.2:9082"
     ],
-    "addedMaxDelay": 3500,
+    "addedMaxDelay": 500,
     "maxConnections": 10
   },
-  "walletSeed": "genesiso6",
+  "walletSeed": "genesis-7",
+  "walletDir": "/tmp/bifrost/data7/wallet",
   "keyFileDir": "keyfiles/node7",
-  "walletDir": "/tmp/scorex/data7/wallet",
-  "dataDir": "/tmp/scorex/data7/blockchain",
-  "logDir": "/tmp/scorex/data7/log",
-  "rpcPort": 9101,
+  "dataDir": "/tmp/bifrost/data7/blockchain",
+  "sbrDir": "/tmp/bifrost/data7/sbr",
+  "logDir": "/tmp/bifrost/data7/log",
+  "rpcPort": 9097,
   "rpcAllowed": [],
   "maxRollback": 100,
-  "blockGenerationDelay": 0,
+  "offlineGeneration": true,
+  "blockGenerationDelay": 5000,
+  "targetBlockTime": 30000,
+  "cors": false,
+  "agent": "test-net7",
   "testnet": true,
-  "cors": false
+  "version": [3, 0, 0],
+  "forkHeight": 0
 }

@@ -1,27 +1,33 @@
 {
-  "name": "node6",
   "p2p": {
+    "name": "node6",
     "bindAddress": "127.0.0.6",
     "upnp": false,
     "upnpGatewayTimeout": 7000,
     "upnpDiscoverTimeout": 3000,
-    "port": 9098,
+    "port": 9086,
     "knownPeers": [
-      "127.0.0.1:9084",
-      "127.0.0.4:9094"
+      "127.0.0.1:9081",
+      "127.0.0.2:9082"
     ],
-    "addedMaxDelay": 5000,
+    "addedMaxDelay": 500,
     "maxConnections": 10
   },
-  "walletSeed": "genesiso5",
+  "walletSeed": "genesis-6",
+  "walletDir": "/tmp/bifrost/data6/wallet",
   "keyFileDir": "keyfiles/node6",
-  "walletDir": "/tmp/scorex/data6/wallet",
-  "dataDir": "/tmp/scorex/data6/blockchain",
-  "logDir": "/tmp/scorex/data6/log",
-  "rpcPort": 9099,
+  "dataDir": "/tmp/bifrost/data6/blockchain",
+  "sbrDir": "/tmp/bifrost/data6/sbr",
+  "logDir": "/tmp/bifrost/data6/log",
+  "rpcPort": 9096,
   "rpcAllowed": [],
   "maxRollback": 100,
-  "blockGenerationDelay": 0,
+  "offlineGeneration": true,
+  "blockGenerationDelay": 5000,
+  "targetBlockTime": 30000,
+  "cors": false,
+  "agent": "test-net6",
   "testnet": true,
-  "cors": false
+  "version": [3, 0, 0],
+  "forkHeight": 0
 }
