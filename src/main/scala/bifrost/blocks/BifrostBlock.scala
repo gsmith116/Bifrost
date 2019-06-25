@@ -77,6 +77,7 @@ object BifrostBlock {
     assert(box.proposition.pubKeyBytes sameElements privateKey.publicKeyBytes)
 
     val unsigned = BifrostBlock(parentId, timestamp, box, Signature25519(Array.empty), txs, inflation, version)
+    //noinspection ScalaStyle
     if (parentId sameElements Array.fill(32)(1: Byte)) {
       // genesis block will skip signature check
       val genesisSignature = Array.fill(Curve25519.SignatureLength25519)(1: Byte)

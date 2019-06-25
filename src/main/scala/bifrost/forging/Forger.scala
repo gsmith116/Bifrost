@@ -53,19 +53,8 @@ class Forger(forgerSettings: ForgingSettings, viewHolderRef: ActorRef) extends A
 
   def pickTransactions( memPool: BifrostMemPool,
                         state: BifrostState,
-                        parent: BifrostBlock,
-                        view: (BifrostHistory, BifrostState, BWallet, BifrostMemPool)
+                        parent: BifrostBlock
                       ): Try[Seq[BifrostTransaction]] = Try {
-    implicit val timeout: Timeout = 10 seconds
-    lazy val to: PublicKey25519Proposition = PublicKey25519Proposition(view._3.secrets.head.publicImage.pubKeyBytes)
-    val infVal = Await.result(infQ ? view._1.height, Duration.Inf).asInstanceOf[Long]
-    print("infVal being used in forger: " + infVal + "\n")
-    lazy val CB = CoinbaseTransaction.createAndApply(view._3, IndexedSeq((to, infVal)), parent.id).get
-    if (CB.newBoxes.size > 0) {
-      print("\n\n" + CB.newBoxes.head.typeOfBox + " : " + CB.newBoxes.head.json + " : " + CB.newBoxes + "\n\n")
-    } else {
-      print("\n" + "No boxes created by 0 value coinbase transaction" + "\n\n")
-    }    
     val regTxs = memPool.take(TransactionsInBlock).foldLeft(Seq[BifrostTransaction]()) { case (txSoFar, tx) =>
       val txNotIncluded = tx.boxIdsToOpen.forall(id => !txSoFar.flatMap(_.boxIdsToOpen).exists(_ sameElements id))
       val txValid = state.validate(tx)
@@ -76,7 +65,7 @@ class Forger(forgerSettings: ForgingSettings, viewHolderRef: ActorRef) extends A
       }
       if (txValid.isSuccess && txNotIncluded) txSoFar :+ tx else txSoFar
     }
-    CB +: regTxs
+    regTxs
   }
 
   private def bounded(value: BigInt, min: BigInt, max: BigInt): BigInt =
@@ -112,7 +101,12 @@ class Forger(forgerSettings: ForgingSettings, viewHolderRef: ActorRef) extends A
 
         val adjustedTarget = calcAdjustedTarget(h.difficulty, parent, forgerSettings.targetBlockTime.length)
 
-        iteration(parent, boxKeys, pickTransactions(m, s, parent, (h, s, w, m)).get, adjustedTarget, forgerSettings.version) match {
+        // query for inflation value
+        implicit val timeout: Timeout = 10 seconds
+        val infVal = Await.result(infQ ? h.height, Duration.Inf).asInstanceOf[Long]
+        print("infVal being used in forger: " + infVal + "\n")
+
+        iteration(parent, boxKeys, pickTransactions(m, s, parent).get, w, infVal, adjustedTarget, forgerSettings.version) match {
           case Some(block) =>
             log.debug(s"Locally generated block: $block")
             viewHolderRef !
@@ -141,10 +135,11 @@ object Forger extends ScorexLogging {
     Longs.fromByteArray((0: Byte) +: h.take(7))
   }
 
-
   def iteration(parent: BifrostBlock,
                 boxKeys: Seq[(ArbitBox, PrivateKey25519)],
-                txsToInclude: Seq[BifrostTransaction],
+                memPoolTxsToInclude: Seq[BifrostTransaction],
+                wallet: BWallet,
+                infVal: Long,
                 target: BigInt,
                 version: Version): Option[BifrostBlock] = {
 
@@ -157,12 +152,23 @@ object Forger extends ScorexLogging {
 
     log.debug(s"Successful hits: ${successfulHits.size}")
     successfulHits.headOption.map { case (boxKey, _) =>
-    if (txsToInclude.head.asInstanceOf[CoinbaseTransaction].newBoxes.size > 0) {
-        BifrostBlock.create(parent.id, Instant.now().toEpochMilli, txsToInclude, boxKey._1, boxKey._2,
-          txsToInclude.head.asInstanceOf[CoinbaseTransaction].newBoxes.head.asInstanceOf[ArbitBox].value, version) // inflation val
+
+      // make coinbase transaction
+      lazy val CB = CoinbaseTransaction.createAndApply(wallet, IndexedSeq((boxKey._1.proposition, infVal)), parent.id).get
+      if (CB.newBoxes.size > 0) {
+        print("\n\n" + CB.newBoxes.head.typeOfBox + " : " + CB.newBoxes.head.json + " : " + CB.newBoxes + "\n\n")
+      } else {
+        print("\n" + "No boxes created by 0 value coinbase transaction" + "\n\n")
       }
-    else {
-        BifrostBlock.create(parent.id, Instant.now().toEpochMilli, txsToInclude, boxKey._1, boxKey._2, 0, version)
+      val txsToInclude = CB +: memPoolTxsToInclude
+
+      // generate new block
+      if (txsToInclude.head.asInstanceOf[CoinbaseTransaction].newBoxes.size > 0) {
+          BifrostBlock.create(parent.id, Instant.now().toEpochMilli, txsToInclude, boxKey._1, boxKey._2,
+            txsToInclude.head.asInstanceOf[CoinbaseTransaction].newBoxes.head.asInstanceOf[ArbitBox].value, version) // inflation val
+        }
+      else {
+          BifrostBlock.create(parent.id, Instant.now().toEpochMilli, txsToInclude, boxKey._1, boxKey._2, 0, version)
       }
     }
   }

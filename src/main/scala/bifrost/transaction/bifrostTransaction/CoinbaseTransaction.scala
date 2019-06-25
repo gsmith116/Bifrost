@@ -68,6 +68,7 @@ case class CoinbaseTransaction (to: IndexedSeq[(PublicKey25519Proposition, Long)
     "timestamp" -> timestamp.asJson
   ).asJson
 
+  //noinspection ScalaStyle
   def commonMessageToSign: Array[Byte] = 
     if(newBoxes.size > 0) {
       newBoxes.head.bytes}
