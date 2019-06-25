@@ -73,20 +73,27 @@ object BifrostNodeViewHolder extends ScorexLogging {
 
   //noinspection ScalaStyle
   def initializeGenesis(settings: ForgingSettings): NodeView = {
-    val GenesisAccountsNum = 50
+    val GenesisAccountsNum = 15
     val GenesisBalance = 100000000L
 
-    //propositions with wallet seed genesisoo, genesiso1, ..., genesis48, genesis49
+    //propositions with wallet seed genesis-10, genesis-11, ..., genesis-14, genesis-21, genesis-22, ..., genesis-93, genesis-94
+    // currently setup for up to 3 nodes controlling 5 keys each
+    // TODO: 2019.06.24 - only the first 15 keys have been generated and included so far. Need to finish including
     val icoMembers: IndexedSeq[PublicKey25519Proposition] =
       IndexedSeq(
-        "6sYyiTguyQ455w2dGEaNbrwkAWAEYV1Zk6FtZMknWDKQ", "7BDhJv6Wh2MekgJLvQ98ot9xiw5x3N4b3KipURdrW8Ge",
-        "Ei8oY3eg5vM26QUBhyFiAdPN1C23RJEV9irrykNmSAFV", "8LNhm5QagL88sWggvJKGDiZ5bBCG4ajV7R6vAKz4czA9",
-        "EakiCSw1rfmL5DFTPNmSJZEEAEGtTp3DN12wVPJVsURS", "AEQ8bZRuAxAp8DV9VZnTrSudGPdNyzY2HXjPBCGy8igf",
-        "DSL6bvb6j1v6SnvKjqc6fJWdsRjZ85YboH8FkzonUPiT", "419sTmWKAXb5526naQ93xJZL4YAYtpVkbLmzMb6k5X9m",
-        "GydWCS1GwExoDNuEiW6fBLYr7cs4vwdLpk1kzDeKHq6A", "G8xVDYow1YcSb4cuAHwcpYSEKxFpYwC9GqYChMvbCWn5",
-        "9E4F53GSXMPqwuPWEVoUQe9B1z4A8v9Y6tAQdKK779km", "5XtHBDxXCudA38FJnoWm1BVG8aV67AiQKnPuwYbWZCb3",
-        "8Sp3v5vtYtkM9Z2K2B7PuZbWmWQE9bfiUFCvkmsdauGj", "8XTUXeLiHPbMNXedWQh5xHQtq4xUHU3pZZGqRQzC2eyj",
-        "ftqJXjSXrWQXmumNVVaRiNB7TZuCy4GCvz9V4GJGhAv", "GMAYWvbBmssCr55m9bcq8cKzfczSKKxidtVrukBM1KFN",
+        "FtEaU2vSnQ9js6sCuFe7jub5EdD12dtdnG5KfdZJVSKm", "AaSSiBekvtkQnr1tptbLEgXn66KbZErEwz3Athw7Pk5",
+        "Ax5moP7rpdRzgRWqLVFtQUyXjMgSS8N3etgTrfcnpyKP", "GSBAUU8DpdvnefPkti5EjFCzpGFYGSgYBZyFkgCUuMG4",
+        "CGSEPZDEkeFWXWt56f77bVxagKZwprwn4LH9y88YP7Tk",
+
+        "BWyWwV1vX1UCuYUQQosrb6Ub49BTpK8ejV7s945bLaB2", "BwYvm5AM524thTKh4XkPeNj2Ahb4NtzUmtrjiLnB6sQc",
+        "9HVWH1gm7mN985tPhRpTNA4iTCjp1WUsWXqaCD2z5Tzf", "DhJsgb6CMe22F1D7BG4NJHQ5i9bzhNcnpYp6HFsHpCbd",
+        "J33zuAbfxPZNm8meMtqWAZxqHeVdvGAYQQ1YpgsmKQjs",
+
+        "4cHsqa8i37vbtoq4BhBukG6WYL4z4iBqu8rexrorGJTX", "46nM2N6n6BA2zdvPBfMCh9deUjr3hF4STmyKHHdp9DE9",
+        "GgRcvooDzFcWqMdTj9exG8T8THaBd6XRdyZEU8xc3eK9", "W44JCVdfTPuXVxkY3au7L5YzsQgdJeNyr1dohdXWLeS",
+        "FEwtS5estvD1EmrbQBmunTU3aJoqEKbobymY17xKMbFS"
+
+    /*"GMAYWvbBmssCr55m9bcq8cKzfczSKKxidtVrukBM1KFN",
         "3nFprwUuqGH9BpvJMQeCb5AwHdaXuxKin1WSxWc9PTkY", "HfYNA96cGebFGgAhGUbxvRJYyLFchQJZpJTQMXztE6gZ",
         "EPbo8xRWARg2znJAqevKnQMskxnemmCdimPiVFhr8eLd", "4pygr1SPEe5KbU1R8XgMmYaW7YfTH818wd113mF6bhsP",
         "52gwahUytUXv7wfKs4j6YeKeepc38sYsUi4jp4z4jVym", "Hi3Q1ZQbD2zztq6ajm5yUKfFccxmj3yZn79GUjhFvPSW",
@@ -101,9 +108,7 @@ object BifrostNodeViewHolder extends ScorexLogging {
         "3oTzYXjwdr684FUzaJEVVuXBztysNgR8M8iV9QykaM9C", "J6bgGpwDMqKFrde2mpdS6dasRyn9WFV6jKgWAkHSN91q",
         "4wtQpa1BVgAt9CA4FUuHZHCYGBYtvudPqa1sAddfAPii", "DaSXwzkAU2WfH39zxMfuXpExsVfKk6JzeYbdW9RLiXr4",
         "6BtXEZE6GcxtEtSLAHXkE3mkcTG1u8WuoQxZG7R8BR5X", "39Z9VaCAeqoWajHyku29argf7zmVqs2vVJM8zYe7YLXy",
-        "7focbpSdsNNE4x9h7eyXSkvXE6dtxsoVyZMpTpuThLoH", "CBdnTL6C4A7nsacxCP3VL3TqUokEraFy49ckQ196KU46",
-        "CfvbDC8dxGeLXzYhDpNpCF2Ar9Q5LKs8QrfcMYAV59Lt", "GFseSi5squ8GRRkj6RknbGj9Hyz82HxKkcn8NKW1e5CF",
-        "FuTHJNKaPTneEYRkjKAC3MkSttvAC7NtBeb2uNGS8mg3", "5hhPGEFCZM2HL6DNKs8KvUZAH3wC47rvMXBGftw9CCA5"
+        "7focbpSdsNNE4x9h7eyXSkvXE6dtxsoVyZMpTpuThLoH" */
       ).map(s => PublicKey25519Proposition(Base58.decode(s).get))
 
     val genesisAccount = PrivateKey25519Companion.generateKeys("genesis".getBytes)
@@ -122,7 +127,7 @@ object BifrostNodeViewHolder extends ScorexLogging {
       ""))
     log.debug(s"Initialize state with transaction ${genesisTxs.head} with boxes ${genesisTxs.head.newBoxes}")
     assert(icoMembers.length == GenesisAccountsNum)
-    assert(Base58.encode(genesisTxs.head.id) == "5dJRukdd7sw7cmc8vwSnwbVggWLPV4VHYsZt7AQcFW3B", Base58.encode(genesisTxs.head.id))
+    //assert(Base58.encode(genesisTxs.head.id) == "5dJRukdd7sw7cmc8vwSnwbVggWLPV4VHYsZt7AQcFW3B", "Assertion failed. genesis TX hashed to " + Base58.encode(genesisTxs.head.id))
 
     val genesisBox = ArbitBox(genesisAccountPriv.publicImage, 0, GenesisBalance)
 
@@ -134,7 +139,7 @@ object BifrostNodeViewHolder extends ScorexLogging {
     val gs = BifrostState.genesisState(settings, Seq(genesisBlock), history)
     val gw = BWallet.genesisWallet(settings, Seq(genesisBlock))
 
-    assert(!Base58.encode(settings.walletSeed).startsWith("genesis") || gw.boxes().flatMap(_.box match {
+    assert(!settings.walletSeed.startsWith("genesis") || gw.boxes().flatMap(_.box match {
       case ab: ArbitBox => Some(ab.value)
       case _ => None
     }).sum >= GenesisBalance)

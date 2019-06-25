@@ -5,22 +5,22 @@
     "upnp": false,
     "upnpGatewayTimeout": 7000,
     "upnpDiscoverTimeout": 3000,
-    "port": 9084,
+    "port": 9081,
     "knownPeers": [
-      "127.0.0.2:9089",
-      "127.0.0.3:9094"
+      "127.0.0.2:9082",
+      "127.0.0.3:9083"
     ],
     "addedMaxDelay": 2000,
     "maxConnections": 10,
     "handshakeTimeout": 2000
   },
-  "walletSeed": "genesiso1",
+  "walletSeed": "genesis-1",
   "walletDir": "/tmp/bifrost/data/wallet",
   "keyFileDir": "keyfiles/node1",
   "dataDir": "/tmp/bifrost/data/blockchain",
   "sbrDir": "/tmp/bifrost/data/sbr",
   "logDir": "/tmp/bifrost/data/log",
-  "rpcPort": 9085,
+  "rpcPort": 9091,
   "rpcAllowed": [],
   "maxRollback": 100,
   "offlineGeneration": true,

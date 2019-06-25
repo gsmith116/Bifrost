@@ -288,17 +288,17 @@ object BWallet {
   }
 
   def readOrGenerate(settings: Settings): BWallet = {
-    val gw = readOrGenerate(settings, Base58.encode(settings.walletSeed))
-    if (Base58.encode(settings.walletSeed).startsWith("genesis")) {
-      val seeds = (0 to 2).map(c => FastCryptographicHash(settings.walletSeed ++ Ints.toByteArray(c)))
+    val gw = readOrGenerate(settings, settings.walletSeed)
+    if (settings.walletSeed.startsWith("genesis")) {
+      val seeds = (0 to 4).map(c => FastCryptographicHash(settings.walletSeed + c))
       val pubKeys = seeds.map { seed =>
         val (priv, pub) = PrivateKey25519Companion.generateKeys(seed)
         if (!gw.publicKeys.contains(pub)) {
           KeyFile("genesis", seed = seed, gw.defaultKeyDir)
         }
+        gw.unlockKeyFile(Base58.encode(pub.pubKeyBytes), "genesis")
         pub
       }
-      gw.unlockKeyFile(Base58.encode(pubKeys.head.pubKeyBytes), "genesis")
     }
     gw
   }

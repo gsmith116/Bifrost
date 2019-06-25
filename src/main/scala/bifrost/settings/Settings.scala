@@ -111,11 +111,10 @@ trait Settings extends ScorexLogging {
     scala.io.StdIn.readLine()
   }
 
-  lazy val walletSeed = settingsJSON.get("walletSeed").flatMap(_.asString).flatMap(s => Base58.decode(s).toOption)
-    .getOrElse {
+  lazy val walletSeed = settingsJSON.get("walletSeed").flatMap(_.asString).getOrElse{
       val generated = scorex.utils.Random.randomBytes(PrivKeyLength)
       log.warn("No wallet seed provided: generated new one:" + Base58.encode(generated))
-      generated
+      Base58.encode(generated)
     }
 
   lazy val apiKeyHash = settingsJSON.get("apiKeyHash").flatMap(_.asString).flatMap(s => Base58.decode(s).toOption)
