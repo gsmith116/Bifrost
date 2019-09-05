@@ -1,0 +1,126 @@
+{
+	"info": {
+		"_postman_id": "b771d128-307a-481d-aa50-bde3cbbbe532",
+		"name": "Loki_Layer",
+		"description": "# Introduction\nLoki is the external API interface for Project Bifrost. Loki serves as the primary interaction layer between user applications and the blockchain. It allows developers to access and post information to and from the blockchain.\n\n# Overview\nThe follow requests represent the API layer of version 0.3 of our blockchain. The routes have been migrated from REST to a JSON-RPC format to make delivering the payload for a request more uniformly and modularly. Routes pertaining to contracts have been temporarily removed. The example requests can be run by either downloading a jar version of one of our blockchain releases (that encapsulates the changes to the API request format) or cloning our repository on GitHub before spinning up a blockchain node. Once the node is running and listening on a port, the global variables need to be set within Postman after which you can hit send beside any of the requests with your own parameters to communicate with the blockchain. Remember that once your node is running, blocks are being forged continuously.\n\n# Authentication\nFor running a local network, sample keyfiles can be found in the /keyfiles directory of our repository or the unpacked jar, arranged in folders addressed by the settings file which determines which directory to use.\n\n# Error Codes\n//TODO\nCurrently everything returns a 500 error so we need things a little more concrete before we start handing this to people.\n\n# Rate limit\n//TODO\nDoes Bifrost institute some rate limit?",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get chain information",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"jsonrpc\": \"2.0\",\n    \"id\": \"1\",\n    \"method\": \"info\",\n    \"params\": [{}]\n}"
+				},
+				"url": {
+					"raw": "http://{{node-host}}:{{node-port}}/debug/",
+					"protocol": "http",
+					"host": [
+						"{{node-host}}"
+					],
+					"port": "{{node-port}}",
+					"path": [
+						"debug",
+						""
+					]
+				},
+				"description": "Find information about the current state of the chain including height, score, bestBlockId, etc\n\n| Name                    \t| Data type \t| Required / Optional \t| Description                                                            \t|\n|-------------------------\t|-----------\t|---------------------\t|------------------------------------------------------------------------\t|\n| --None specified--                   |     \t|           \t| |"
+			},
+			"response": [
+				{
+					"name": "Get chain information",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"jsonrpc\": \"2.0\",\n    \"id\": \"1\",\n    \"method\": \"info\",\n    \"params\": [{}]\n}"
+						},
+						"url": {
+							"raw": "http://{{node-host}}:{{node-port}}/debug/",
+							"protocol": "http",
+							"host": [
+								"{{node-host}}"
+							],
+							"port": "{{node-port}}",
+							"path": [
+								"debug",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "akka-http/10.0.9"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 08 Feb 2019 04:30:53 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1147"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"jsonrpc\": \"2.0\",\n    \"id\": \"1\",\n    \"result\": {\n        \"score\": 7575117420571,\n        \"height\": \"276\",\n        \"stateVersion\": \"6CTTJfi9kHme47tH9KShsLjtRhtTsJQX8BDmCUKM87Md\",\n        \"bestBlock\": {\n            \"timestamp\": 1549600244761,\n            \"inflation\": 250,\n            \"signature\": \"2u45h75avr74LEo8WVbXoBCyoBNE3faVqQWAeu6qdSgEwgE8q5RjWrkxUDRNPSvyuDNQvcUCPgPEWuRdB6NUYj8i\",\n            \"generatorBox\": \"111zEddudjZtxDVS3hwEhvLt2WfTbLt939RYCpm3FXQwbc3Wie9h489iGQvggrQfvH2QZNLYfF7ra5SG\",\n            \"id\": \"6CTTJfi9kHme47tH9KShsLjtRhtTsJQX8BDmCUKM87Md\",\n            \"txs\": [\n                {\n                    \"blockID\": \"9cfHbdDyQFoCLMM2BEmWsKVcw2x4c1cyU4QCrEh5zAGA\",\n                    \"timestamp\": 1549600244760,\n                    \"newBoxes\": [\n                        \"EUduANsN4Yu7mWPG9sGfPRozePR8c9BE4u3oz9uwJoTU\"\n                    ],\n                    \"to\": {\n                        \"proposition\": \"6sYyiTguyQ455w2dGEaNbrwkAWAEYV1Zk6FtZMknWDKQ\",\n                        \"value\": 250\n                    },\n                    \"id\": \"A1msuA8HZExkEScdEqRysE2kXADoB3jGMQdca29Li5Ba\",\n                    \"fee\": 0\n                }\n            ],\n            \"parentId\": \"9cfHbdDyQFoCLMM2BEmWsKVcw2x4c1cyU4QCrEh5zAGA\"\n        },\n        \"bestBlockId\": \"6CTTJfi9kHme47tH9KShsLjtRhtTsJQX8BDmCUKM87Md\"\n    }\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "cf5473ec-0d1e-48aa-ac51-699babb5d2f2",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "0e8c7bee-ca6e-462c-bdb1-1f0a809555c7",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

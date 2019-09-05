@@ -3,7 +3,17 @@
 # Check https://circleci.com/docs/2.0/sample-config/ for more details
 #
 version: 2
+orbs:
+  newman: postman/newman@0.0.2
 jobs:
+  newman-collection-run:
+    executor: newman/postman-newman-docker
+    steps:
+      - checkout
+      - newman/newman-run:
+          collection: ./Loki_Layer.postman_collection.json
+          environment: ./Bifrost_local_JSON_RPC.postman_environment.json
+          
   unit_tests:
     docker:
       # specify the version you desire here
