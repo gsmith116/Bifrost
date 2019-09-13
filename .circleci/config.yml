@@ -8,6 +8,7 @@ workflows:
   tests:
     jobs:
       - unit_tests
+      - newman-collection-run
 
 version: 2.1
 orbs:
