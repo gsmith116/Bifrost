@@ -4,13 +4,13 @@
 #
 # add comment
 workflows:
-  version: 2.1
+  version: 2
   tests:
     jobs:
       - unit_tests
       - newman-collection-run
 
-version: 2.1
+version: 2
 orbs:
   newman: postman/newman@0.0.2
 jobs:

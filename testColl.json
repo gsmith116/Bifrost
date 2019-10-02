@@ -27,12 +27,15 @@
 					"raw": "{\n    \"jsonrpc\": \"2.0\",\n    \"id\": \"1\",\n    \"method\": \"info\",\n    \"params\": [{}]\n}"
 				},
 				"url": {
-					"raw": "http://{{node-host}}:{{node-port}}/debug/",
+					"raw": "http://127.0.0.1:9085/debug/",
 					"protocol": "http",
 					"host": [
-						"{{node-host}}"
+						"127",
+						"0",
+						"0",
+						"1"
 					],
-					"port": "{{node-port}}",
+					"port": "9085",
 					"path": [
 						"debug",
 						""
